@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    <title>Home</title>
+</head>
+{% load auth_extras %}
+
+<body>
+    <div class="container">
+        <p>Hello! {{request.user}}
+        <a href="{% url 'logout' %}"><button id="new">logout</button></a>
+        </p>
+        {% if request.user|has_group:"Data Manager" %}
+        <a href="{% url 'deletion' %}"><button id="new">deletion requests</button></a>
+
+        <h1>Parallel Corpus</h1>
+            <form method="get">
+                <input type="text" placeholder="Search.." name="search_query">
+                <button type="submit">Search</button>
+            </form>
+            <table id="customers" border="1">
+                <thead>
+                    <th>English Text</th>
+                    <th>Hindi Text</th>
+                    <th>Manipuri Text</th>
+                    <th>Created at</th>
+                    <th>Verify_en_mn</th>
+                    <th>Verify_hi_mn</th>
+                    <th>Verify_en_hi</th>
+                    <th colspan="2" id="mid">Action</th>
+                </thead>
+                {% for parallel_text in parallel_texts %}
+                <tr>
+                    <td>{{ parallel_text.en_text }}</td>
+                    <td>{{ parallel_text.hi_text }}</td>
+                    <td>{{ parallel_text.mn_text }}</td>
+                    <td>{{ parallel_text.created_at }}</td>
+                    <td>{{ parallel_text.verify_en_mn }}</td>
+                    <td>{{ parallel_text.verify_hi_mn }}</td>
+                    <td>{{ parallel_text.verify_en_hi }}</td>
+                    <td>
+                        <a href="update/{{parallel_text.id}}/{{choice}}"><button id="up">Update</button></a>
+                    </td>
+                    <td>
+                        <a href="delete/{{parallel_text.id}}/{{choice}}"><button id="del">Delete</button></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <br><br>
+            
+            <a href="{% url 'insert' %}"><button id="new3">Add</button></a>
+            <a href="{% url 'upload' %}"><button id="new3">Upload/Download</button></a>
+        {% else %}
+        <h1>Parallel Corpus</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" name="go">Go</button>
+            </form>
+        {% endif %}
+    </div>
+    {{ redirect_to_login_immediately }}
+</body>
+
+</html>

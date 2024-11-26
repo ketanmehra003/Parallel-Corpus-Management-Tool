@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'update.css' %}">
+    <title>Update</title>
+</head>
+{% load auth_extras %}
+
+<body>
+    <div class="container2">
+        <h1>Update Corpus</h1>
+        {% if choice == 0 %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <label for="id_en_text">English Text:</label>
+                <input type="text" id="id_en_text" name="en_text" value="{{ form.en_text.value }}"><br>
+
+                <label for="id_hi_text">Hindi Text:</label>
+                <input type="text" id="id_hi_text" name="hi_text" value="{{ form.hi_text.value }}"><br>
+
+                <label for="id_mn_text">Manipuri Text:</label>
+                <input type="text" id="id_mn_text" name="mn_text" value="{{ form.mn_text.value }}"><br>
+
+                <label for="id_verify_en_mn">Verify_en_mn:</label>
+                <input type="number" min="1" max="5" id="id_verify_en_mn" name="verify_en_mn" value="{{ form.verify_en_mn.value }}"><br>
+                
+                <label for="id_verify_hi_mn">Verify_hi_mn:</label>
+                <input type="number" min="1" max="5" id="id_verify_hi_mn" name="verify_hi_mn" value="{{ form.verify_hi_mn.value }}"><br>
+                
+                <label for="id_verify_en_hi">Verify_en_hi:</label>
+                <input type="number" min="1" max="5" id="id_verify_en_hi" name="verify_en_hi" value="{{ form.verify_en_hi.value }}"><br>
+                
+                <button type="submit" id="new2">Update</button>
+            </form>
+        {% elif choice == 1 %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <label for="id_en_text">English Text:</label>
+                <input type="text" id="id_en_text" name="en_text" value="{{ form.en_text.value }}"><br>
+
+                <label for="id_hi_text">Hindi Text:</label>
+                <input type="text" id="id_hi_text" name="hi_text" value="{{ form.hi_text.value }}"><br>
+
+                <label for="id_verify_en_hi">Verify_en_hi:</label>
+                <input type="number" min="1" max="5" id="id_verify_en_hi" name="verify_en_hi" value="{{ form.verify_en_hi.value }}"><br>
+
+                <button type="submit" id="new2">Update</button>
+            </form>
+
+        {% elif choice == 2 %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <label for="id_en_text">English Text:</label>
+                <input type="text" id="id_en_text" name="en_text" value="{{ form.en_text.value }}"><br>
+
+                <label for="id_mn_text">Manipuri Text:</label>
+                <input type="text" id="id_mn_text" name="mn_text" value="{{ form.mn_text.value }}"><br>
+
+                <label for="id_verify_en_mn">Verify_en_mn:</label>
+                <input type="number" min="1" max="5" id="id_verify_en_mn" name="verify_en_mn" value="{{ form.verify_en_mn.value }}"><br>
+
+                <button type="submit" id="new2">Update</button>
+            </form>
+
+        {% elif choice == 3 %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <label for="id_hi_text">Hindi Text:</label>
+                <input type="text" id="id_hi_text" name="hi_text" value="{{ form.hi_text.value }}"><br>
+
+                <label for="id_mn_text">Manipuri Text:</label>
+                <input type="text" id="id_mn_text" name="mn_text" value="{{ form.mn_text.value }}"><br>
+
+                <label for="id_verify_hi_mn">Verify_hi_mn:</label>
+                <input type="number" min="1" max="5" id="id_verify_hi_mn" name="verify_hi_mn" value="{{ form.verify_hi_mn.value }}"><br>
+
+                <button type="submit" id="new2">Update</button>
+            </form>
+
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+    <title>Corpus Management Tool</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Corpus Management Tool</h1>
+        <p>Manage your parallel text corpora with ease.</p>
+        <p>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+        </p>
+    </div>
+</body>
+</html>

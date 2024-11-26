@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'deletion.css' %}">
+    <title>Home</title>
+</head>
+{% load auth_extras %}
+
+<body>
+    <div class="container">
+        <p>Hello! {{request.user}}
+        <a href="{% url 'logout' %}"><button id="new">logout</button></a>
+        </p>
+
+        <h1>Parallel Corpus</h1>
+        
+        {% if request.user|has_group:"Data Manager" %}
+           
+            <form action="" method="post" id="myForm"><!--{% url 'delete-multiple' %}-->
+                {% csrf_token %}
+                <button type="button" id="checkall">Check all</button>
+                <button type="button" id="uncheckall">Uncheck all</button>
+            <table id="customers" border="1">
+                <thead>
+                    <th></th>
+                    <th>English Text</th>
+                    <th>Hindi Text</th>
+                    <th>Manipuri Text</th>
+                    <th>Created at</th>
+                    <th>Verify_en_mn</th>
+                    <th>Verify_hi_mn</th>
+                    <th>Verify_en_hi</th>
+                    <th id="mid">Action</th>
+                </thead>
+                {% for deletion_request in deletion_requests %}
+                <tr>
+                    <td>
+                        <input type="checkbox" class="row-checkbox" name="row-checkbox" value="{{ deletion_request.parallel_text.id }}">
+                    </td>
+                    <td>{{ deletion_request.parallel_text.en_text }}</td>
+                    <td>{{ deletion_request.parallel_text.hi_text }}</td>
+                    <td>{{ deletion_request.parallel_text.mn_text }}</td>
+                    <td>{{ deletion_request.parallel_text.created_at }}</td>
+                    <td>{{ deletion_request.parallel_text.verify_en_mn }}</td>
+                    <td>{{ deletion_request.parallel_text.verify_hi_mn }}</td>
+                    <td>{{ deletion_request.parallel_text.verify_en_hi }}</td>
+                    <td>
+                        <a href="/home/delete/{{deletion_request.parallel_text.id}}/4"><button type="button" id="del">Delete</button></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <button id="delete-selected" type="submit" value="delete">Delete selected</button>
+            <button id="ignore-selected" type="submit" value="ignore">Ignore selected</button>
+            </form>
+            <br><br>
+        {% else %}
+            <h1>Permission Denied</h1>
+        {% endif %}
+    </div>
+    <script>
+        document.getElementById('checkall').addEventListener('click', function() {
+            var checkboxes = document.getElementsByName('row-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = true;
+            }
+        });
+        document.getElementById('uncheckall').addEventListener('click', function() {
+            var checkboxes = document.getElementsByName('row-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = false;
+            }
+        });
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            var action = event.submitter.value;
+            if (action === "delete") {
+                this.action = "{% url 'delete-multiple' %}";
+            }
+            else if (action === "ignore") {
+                this.action = "{% url 'ignore-multiple' %}";
+            }
+        });
+    </script>
+</body>
+
+</html>
